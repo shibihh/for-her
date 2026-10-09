@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>while(alive) { love(you); } // A Code Proposal</title>
+  <meta name="description" content="A romantic developer-themed proposal interactive web experience.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-neon-rose">
+  <!-- Interactive Background Canvas (Binary + Starfield + Floating Hearts) -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="nav-brand">
+        <span class="code-bracket">&lt;</span>
+        <span class="heart-pulse">❤️</span>
+        <span class="brand-text">Love<span class="brand-accent">.init()</span></span>
+        <span class="code-bracket">&gt;</span>
+      </div>
+
+      <div class="nav-stats">
+        <div class="stat-pill">
+          <span class="status-indicator"></span>
+          <span class="stat-label">Branch:</span>
+          <span class="stat-value" id="currentBranch">feature/forever-with-you</span>
+        </div>
+        <div class="stat-pill hide-mobile">
+          <span class="stat-label">Heartbeat:</span>
+          <span class="stat-value neon-pink">0ms Latency</span>
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <!-- Sound / Music Synthesizer Toggle -->
+        <button id="audioToggleBtn" class="nav-btn" title="Toggle Romantic Lo-Fi Ambient Synth">
+          <span class="audio-icon">🎵</span>
+          <span class="btn-text">Music: <strong id="musicStatusText">OFF</strong></span>
+          <div class="audio-bars">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+
+        <!-- Theme Selector -->
+        <button id="themeCycleBtn" class="nav-btn" title="Switch Aesthetic Theme">
+          <span>🎨</span>
+          <span class="btn-text" id="themeNameText">Rose Neon</span>
+        </button>
+
+        <!-- Personalize Button -->
+        <button id="openCustomizeBtn" class="nav-btn highlight-btn" title="Customize for your crush">
+          <span>⚙️</span>
+          <span class="btn-text">Personalize</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+      
+      <!-- Hero Intro Banner -->
+      <section class="hero-banner">
+        <div class="hero-tag">
+          <span class="tag-icon">⚡</span>
+          <span>COMPILING ULTIMATE EMOTION</span>
+        </div>
+        <h1 class="hero-title">
+          In a world of billions of lines of code,<br>
+          <span class="gradient-text">You are my only favorite syntax.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Dedicated to <span class="crush-name-highlight" id="heroCrushName">My Crush</span> — 
+          Written by <span class="proposer-name-highlight" id="heroProposerName">Your Dev</span> with zero bugs and 100% devotion.
+        </p>
+
+        <div class="hero-actions">
+          <button id="heroRunBtn" class="action-btn primary-action">
+            <span class="btn-icon">▶</span>
+            <span>Execute Proposal</span>
+            <span class="keyboard-badge">Ctrl + 💖</span>
+          </button>
+          <button id="heroExploreBtn" class="action-btn secondary-action">
+            <span class="btn-icon">📂</span>
+            <span>Explore Codebase</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- The Developer IDE Window (VS Code / Terminal Style) -->
+      <section class="ide-window" id="ideContainer">
+        
+        <!-- Window Titlebar with Mac buttons -->
+        <div class="ide-titlebar">
+          <div class="window-controls">
+            <span class="win-btn close" title="Cannot close: Feelings are infinite"></span>
+            <span class="win-btn minimize" title="Cannot minimize: You're always in my mind"></span>
+            <span class="win-btn maximize" title="Maximized to full screen heart"></span>
+          </div>
+          
+          <div class="ide-title">
+            <span class="folder-icon">📁</span>
+            <span>my-heart / src / <strong id="activeTabFileName">proposal.ts</strong></span>
+          </div>
+
+          <div class="ide-actions">
+            <button id="runCodeBtn" class="run-code-button" title="Run and Compile Proposal">
+              <span class="play-icon">▶</span>
+              <span>Run Code</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- IDE Workspace Body -->
+        <div class="ide-body">
+          
+          <!-- File Explorer Sidebar -->
+          <aside class="ide-sidebar hide-mobile">
+            <div class="sidebar-header">
+              <span>EXPLORER: MY-HEART</span>
+            </div>
+            <div class="file-tree">
+              <div class="file-group-label">▾ src / feelings</div>
+              
+              <button class="file-item active" data-tab="proposal">
+                <span class="file-icon ts">TS</span>
+                <span class="file-name">proposal.ts</span>
+              </button>
+
+              <button class="file-item" data-tab="commits">
+                <span class="file-icon git">GIT</span>
+                <span class="file-name">git_log.md</span>
+              </button>
+
+              <button class="file-item" data-tab="reasons">
+                <span class="file-icon json">{}</span>
+                <span class="file-name">reasons.json</span>
+              </button>
+
+              <button class="file-item" data-tab="letter">
+                <span class="file-icon md">MD</span>
+                <span class="file-name">love_letter.md</span>
+              </button>
+
+              <button class="file-item" data-tab="terminal">
+                <span class="file-icon sh">&gt;_</span>
+                <span class="file-name">debugger.sh</span>
+              </button>
+            </div>
+
+            <div class="sidebar-footer">
+              <div class="system-health">
+                <span class="health-dot"></span>
+                <span>CPU: 100% Thinking of You</span>
+              </div>
+            </div>
+          </aside>
+
+          <!-- IDE Editor Workspace -->
+          <div class="ide-editor-area">
+            
+            <!-- Tabs Bar -->
+            <div class="ide-tabs-bar" id="tabsBar">
+              <button class="tab-button active" data-tab="proposal">
+                <span class="file-icon ts">TS</span>
+                <span>proposal.ts</span>
+                <span class="tab-close">×</span>
+              </button>
+              <button class="tab-button" data-tab="commits">
+                <span class="file-icon git">GIT</span>
+                <span>git_log.md</span>
+                <span class="tab-close">×</span>
+              </button>
+              <button class="tab-button" data-tab="reasons">
+                <span class="file-icon json">{}</span>
+                <span>reasons.json</span>
+                <span class="tab-close">×</span>
+              </button>
+              <button class="tab-button" data-tab="letter">
+                <span class="file-icon md">MD</span>
+                <span>love_letter.md</span>
+                <span class="tab-close">×</span>
+              </button>
+            </div>
+
+            <!-- Editor Content Viewports -->
+            <div class="editor-content-container">
+
+              <!-- TAB 1: proposal.ts -->
+              <div class="tab-panel active" id="tab-proposal">
+                <div class="code-editor-grid">
+                  <div class="line-numbers" id="lineNumbers">
+                    <!-- generated dynamically -->
+                  </div>
+                  <div class="code-view" id="proposalCodeView">
+                    <!-- Pre-formatted code with rich syntax highlight classes -->
+                    <pre><code><span class="token-comment">/**</span>
+<span class="token-comment"> * Project: Lifetime Partnership Project</span>
+<span class="token-comment"> * Author:  <span class="dynamic-proposer">Your Dev</span></span>
+<span class="token-comment"> * Target:  <span class="dynamic-crush">My Crush</span></span>
+<span class="token-comment"> * Status:  Pending Merge Request into Forever</span>
+<span class="token-comment"> */</span>
+
+<span class="token-keyword">import</span> { Heart, Destiny, InfinityYears } <span class="token-keyword">from</span> <span class="token-string">'@universe/fate'</span>;
+<span class="token-keyword">import</span> { MyWorld } <span class="token-keyword">from</span> <span class="token-string">'@life/reality'</span>;
+
+<span class="token-keyword">interface</span> <span class="token-type">DreamPartner</span> {
+  <span class="token-prop">name</span>: <span class="token-type">string</span>;
+  <span class="token-prop">smileRating</span>: <span class="token-string">"off-the-charts"</span>;
+  <span class="token-prop">isIndispensable</span>: <span class="token-keyword">true</span>;
+  <span class="token-prop">bugs</span>: <span class="token-number">0</span>;
+}
+
+<span class="token-keyword">const</span> <span class="token-variable">you</span>: <span class="token-type">DreamPartner</span> = {
+  <span class="token-prop">name</span>: <span class="token-string">"<span class="dynamic-crush">My Crush</span>"</span>,
+  <span class="token-prop">smileRating</span>: <span class="token-string">"off-the-charts"</span>,
+  <span class="token-prop">isIndispensable</span>: <span class="token-keyword">true</span>,
+  <span class="token-prop">bugs</span>: <span class="token-number">0</span> <span class="token-comment">// You are perfection itself</span>
+};
+
+<span class="token-keyword">class</span> <span class="token-type">MyHeart</span> <span class="token-keyword">extends</span> <span class="token-type">Heart</span> {
+  <span class="token-keyword">private</span> <span class="token-variable">state</span> = <span class="token-string">"Permanently Enchanted"</span>;
+
+  <span class="token-function">constructor</span>() {
+    <span class="token-keyword">super</span>();
+    <span class="token-keyword">this</span>.<span class="token-function">attachObserver</span>(<span class="token-variable">you</span>);
+  }
+
+  <span class="token-keyword">public</span> <span class="token-function">queryFeelings</span>(): <span class="token-type">Promise</span>&lt;<span class="token-type">string</span>&gt; {
+    <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-type">Promise</span>((<span class="token-variable">resolve</span>) =&gt; {
+      <span class="token-comment">// In every universe and every branch:</span>
+      <span class="token-keyword">while</span> (<span class="token-keyword">true</span>) {
+        <span class="token-keyword">if</span> (<span class="token-keyword">this</span>.<span class="token-function">isWith</span>(<span class="token-variable">you</span>)) {
+          <span class="token-variable">resolve</span>(<span class="token-string">"Happiest developer in the known universe ❤️"</span>);
+          <span class="token-keyword">break</span>;
+        }
+      }
+    });
+  }
+}
+
+<span class="token-comment">// The critical question to execute:</span>
+<span class="token-keyword">async function</span> <span class="token-function">proposeForever</span>() {
+  <span class="token-variable">console</span>.<span class="token-function">log</span>(<span class="token-string">"Initializing proposal sequence..."</span>);
+  
+  <span class="token-keyword">const</span> <span class="token-variable">question</span> = <span class="token-string">"Will you be my girl and my favorite duo partner?"</span>;
+  <span class="token-keyword">const</span> <span class="token-variable">answer</span> = <span class="token-keyword">await</span> <span class="token-variable">you</span>.<span class="token-function">respondToProposal</span>();
+
+  <span class="token-keyword">if</span> (<span class="token-variable">answer</span> === <span class="token-string">"YES"</span>) {
+    <span class="token-function">commitToMainBranch</span>(<span class="token-string">"Our Beautiful Future"</span>);
+    <span class="token-keyword">return</span> <span class="token-variable">InfinityYears</span>;
+  }
+}
+
+<span class="token-comment">// Click 'Run Code' or the button below to see the magic happen!</span>
+<span class="token-function">proposeForever</span>();</code></pre>
+                  </div>
+                </div>
+
+                <!-- Code Bottom Action Strip -->
+                <div class="code-action-strip">
+                  <div class="strip-left">
+                    <span class="badge utf8">UTF-8</span>
+                    <span class="badge ts">TypeScript 5.4</span>
+                    <span class="badge git-branch">⑂ main</span>
+                  </div>
+                  <div class="strip-right">
+                    <button id="bottomRunTrigger" class="glow-run-btn">
+                      <span>▶ Execute proposalForever()</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 2: git_log.md (Timeline of Commits) -->
+              <div class="tab-panel" id="tab-commits">
+                <div class="commits-container">
+                  <div class="section-badge">GIT COMMIT LOG: REPOSITORY OF OUR HEARTS</div>
+                  
+                  <div class="commit-timeline">
+                    
+                    <div class="commit-item">
+                      <div class="commit-dot"></div>
+                      <div class="commit-content">
+                        <div class="commit-meta">
+                          <span class="commit-hash">commit 8f2a1b9</span>
+                          <span class="commit-date">Phase 1: The Initial Spark</span>
+                        </div>
+                        <h3 class="commit-title">feat: First time I noticed your breathtaking smile</h3>
+                        <p class="commit-desc">
+                          Memory allocation spiked to 100%. All background jobs froze. My eyes refused to look at any other variable in the room.
+                        </p>
+                        <div class="commit-diff">
+                          <span class="diff-add">+ Life.sparkle = true;</span>
+                          <span class="diff-sub">- Loneliness;</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="commit-item">
+                      <div class="commit-dot"></div>
+                      <div class="commit-content">
+                        <div class="commit-meta">
+                          <span class="commit-hash">commit 4c9e83d</span>
+                          <span class="commit-date">Phase 2: Catching Feelings</span>
+                        </div>
+                        <h3 class="commit-title">fix: Tried to act calm and nonchalant around you</h3>
+                        <p class="commit-desc">
+                          Failed miserably. Heart rate went through the roof, speech stuttered, and my mind started daydreaming about talking to you for hours.
+                        </p>
+                        <div class="commit-diff">
+                          <span class="diff-add">+ HeartRate = 180; // Overclocked</span>
+                          <span class="diff-sub">- CoolGuyFacade;</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="commit-item">
+                      <div class="commit-dot"></div>
+                      <div class="commit-content">
+                        <div class="commit-meta">
+                          <span class="commit-hash">commit 2b7f01e</span>
+                          <span class="commit-date">Phase 3: The Deep Realization</span>
+                        </div>
+                        <h3 class="commit-title">refactor: Rewrote my universe with you at the center</h3>
+                        <p class="commit-desc">
+                          Realized you're not just someone I like; you are the inspiration behind every good thought, every late-night coding session, and every warm feeling.
+                        </p>
+                        <div class="commit-diff">
+                          <span class="diff-add">+ Priority.setHighest("<span class="dynamic-crush">My Crush</span>");</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="commit-item highlight-commit">
+                      <div class="commit-dot pulse"></div>
+                      <div class="commit-content">
+                        <div class="commit-meta">
+                          <span class="commit-hash">commit HEAD -> main</span>
+                          <span class="commit-date">Right Now</span>
+                        </div>
+                        <h3 class="commit-title">release v1.0.0: Asking you to be mine forever</h3>
+                        <p class="commit-desc">
+                          Pull request opened. No merge conflicts detected. Pure compatibility and unshakeable love.
+                        </p>
+                        <button class="small-action-btn trigger-proposal-btn">
+                          Review Pull Request & Merge 💍
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 3: reasons.json (Interactive Love Metrics) -->
+              <div class="tab-panel" id="tab-reasons">
+                <div class="reasons-container">
+                  <div class="section-badge">CONFIGURATION: WHY YOU ARE MY #1</div>
+                  
+                  <div class="cards-grid">
+                    <div class="reason-card">
+                      <div class="card-icon">⚡</div>
+                      <h3>Zero Latency Connection</h3>
+                      <p>
+                        Whenever I talk to you, everything clicks instantly. No awkward buffers, no timeouts, just effortless warmth.
+                      </p>
+                      <span class="card-metric">Ping: 0.1ms</span>
+                    </div>
+
+                    <div class="reason-card">
+                      <div class="card-icon">🔐</div>
+                      <h3>End-to-End Encrypted Trust</h3>
+                      <p>
+                        You are the safe harbor where I can share every secret, every silly idea, and every dream without hesitation.
+                      </p>
+                      <span class="card-metric">Cipher: Pure Devotion</span>
+                    </div>
+
+                    <div class="reason-card">
+                      <div class="card-icon">✨</div>
+                      <h3>No Memory Leaks</h3>
+                      <p>
+                        Every single memory of your laugh is cached permanently in my heart. Not even a system reboot could erase it.
+                      </p>
+                      <span class="card-metric">Cache: Permanent</span>
+                    </div>
+
+                    <div class="reason-card">
+                      <div class="card-icon">💖</div>
+                      <h3>You Fix All My Bugs</h3>
+                      <p>
+                        On days when everything goes wrong and life throws exceptions, just hearing your voice debugs my entire world.
+                      </p>
+                      <span class="card-metric">Status: 100% Healed</span>
+                    </div>
+
+                    <div class="reason-card">
+                      <div class="card-icon">☕</div>
+                      <h3>Better Than Coffee & Code</h3>
+                      <p>
+                        Late night hot chocolate, cozy banter, and talking until 3 AM with you beats any code breakthrough I've ever made.
+                      </p>
+                      <span class="card-metric">Dopamine: Max Level</span>
+                    </div>
+
+                    <div class="reason-card">
+                      <div class="card-icon">♾️</div>
+                      <h3>An Infinite Loop I Want</h3>
+                      <p>
+                        Most infinite loops are dangerous, but looping through days of loving you is the only program I want to run forever.
+                      </p>
+                      <span class="card-metric">while(love) == true</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 4: love_letter.md -->
+              <div class="tab-panel" id="tab-letter">
+                <div class="letter-container">
+                  <div class="letter-card">
+                    <!-- Embedded aesthetic hero artwork -->
+                    <div class="letter-hero-art">
+                      <img src="assets/couple.jpg" alt="Romantic Developer Couple Under Starry Skies" class="couple-img">
+                      <div class="art-caption">
+                        <span>// Us, building our own beautiful world under the stars 🌌</span>
+                      </div>
+                    </div>
+
+                    <div class="letter-body">
+                      <div class="letter-stamp">❤️ TO: <span class="dynamic-crush">MY CRUSH</span></div>
+                      
+                      <h2 class="letter-heading">Dearest <span class="dynamic-crush">My Crush</span>,</h2>
+                      
+                      <p class="letter-text">
+                        They say programmers spend their whole lives seeking elegant solutions, clean architectures, and perfect logic.
+                        But the very first time our eyes met, every piece of logic in my head gently surrendered.
+                      </p>
+
+                      <p class="letter-text">
+                        You showed me that the most beautiful things in this universe can’t be computed or measured in lines of code. 
+                        It’s the way your eyes crinkle when you laugh, the kindness in your voice, and how you make ordinary moments feel like magic.
+                      </p>
+
+                      <p class="letter-text">
+                        I built this little digital corner for you because code is how I create, but <strong>you</strong> are what makes my world worth creating for. 
+                        I don’t want a temporary branch or a trial version; I want you for the full release, for every sprint, every high, every low, and every tomorrow.
+                      </p>
+
+                      <div class="letter-signature">
+                        <span>Forever & always yours,</span>
+                        <h3 class="signature-name dynamic-proposer">Your Dev</h3>
+                      </div>
+
+                      <div class="letter-cta">
+                        <button class="romantic-propose-btn trigger-proposal-btn">
+                          💍 Click here to hear my question
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Terminal Output Console (Appears when running code) -->
+              <div class="ide-terminal-drawer" id="terminalDrawer">
+                <div class="terminal-header">
+                  <div class="terminal-title">
+                    <span class="terminal-icon">&gt;_</span>
+                    <span>DEBUG CONSOLE & OUTPUT</span>
+                  </div>
+                  <div class="terminal-tools">
+                    <span class="badge build-status" id="buildStatusBadge">IDLE</span>
+                    <button class="icon-tool-btn" id="closeTerminalBtn">✕</button>
+                  </div>
+                </div>
+                <div class="terminal-content" id="terminalOutput">
+                  <div class="log-line text-muted">[System] Ready to compile src/proposal.ts...</div>
+                  <div class="log-line text-muted">[Tip] Press 'Run Code' to execute proposal sequence.</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <span>Crafted with pure love & JavaScript 💖</span>
+        <span class="footer-sep">•</span>
+        <span>Version 1.0.0-FOREVER</span>
+        <span class="footer-sep">•</span>
+        <button id="customizeFooterBtn" class="link-btn">Personalize this message</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- THE BIG PROPOSAL MODAL POPUP -->
+  <div class="proposal-modal-backdrop" id="proposalModal">
+    <div class="proposal-dialog">
+      
+      <div class="dialog-decorations">
+        <span class="floating-heart-dec h1">💖</span>
+        <span class="floating-heart-dec h2">✨</span>
+        <span class="floating-heart-dec h3">💍</span>
+        <span class="floating-heart-dec h4">🌸</span>
+      </div>
+
+      <div class="modal-card">
+        <div class="modal-badge">
+          <span>CRITICAL MERGE REQUEST</span>
+        </div>
+
+        <div class="modal-avatar">
+          <div class="avatar-ring">
+            <span class="avatar-emoji">👩‍💻❤️👨‍💻</span>
+          </div>
+        </div>
+
+        <h2 class="modal-question">
+          <span class="dynamic-crush">My Crush</span>,<br>
+          <span class="pink-gradient">Will you be my girlfriend?</span>
+        </h2>
+
+        <p class="modal-description" id="modalCustomNote">
+          I promise to love you, support your dreams, make you laugh on hard days, and treat you like the treasure you truly are. Let’s make this official!
+        </p>
+
+        <!-- The Interactive Buttons Playground -->
+        <div class="proposal-button-zone" id="buttonPlayground">
+          <!-- The Big YES Button -->
+          <button id="yesBtn" class="yes-button">
+            <span class="yes-glow"></span>
+            <span class="yes-icon">💖</span>
+            <span class="yes-text">YES! A Million Times Yes!</span>
+          </button>
+
+          <!-- The Evasive NO Button (Runs away!) -->
+          <button id="noBtn" class="no-button">
+            <span class="no-text">No</span>
+          </button>
+        </div>
+
+        <div class="evasive-alert" id="evasiveAlert" style="display: none;">
+          <span class="alert-icon">⚠️</span>
+          <span id="evasiveAlertText">System alert: 'No' is mathematically forbidden!</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CELEBRATION SUCCESS OVERLAY -->
+  <div class="celebration-overlay" id="celebrationOverlay">
+    <canvas id="confettiCanvas"></canvas>
+    
+    <div class="celebration-container">
+      <div class="celebration-card">
+        <div class="badge-ribbon">OFFICIAL GIT COMMITMENT</div>
+        
+        <div class="celebration-emoji-bounce">🎉 💖 💍 🥂</div>
+        
+        <h1 class="celebration-title">
+          SHE SAID YES!
+        </h1>
+        
+        <p class="celebration-subtitle">
+          Branches successfully merged. No conflicts detected. Two hearts, one repository forever.
+        </p>
+
+        <!-- Official Love Certificate -->
+        <div class="love-certificate" id="loveCert">
+          <div class="cert-border">
+            <div class="cert-header">
+              <span class="cert-logo">💍 CERTIFICATE OF LOVE & MERGE</span>
+              <span class="cert-id" id="certCommitId">HASH: 7f8a92e-FOREVER</span>
+            </div>
+            
+            <div class="cert-body">
+              <p class="cert-declare">This certifies that as of this very second:</p>
+              
+              <div class="cert-names">
+                <span class="name-box dynamic-crush">My Crush</span>
+                <span class="and-sym">&</span>
+                <span class="name-box dynamic-proposer">Your Dev</span>
+              </div>
+
+              <p class="cert-terms">
+                Have officially declared their love, unlocked infinite happiness, and agreed to be each other's lifelong best friend and duo partner!
+              </p>
+
+              <div class="relationship-counter">
+                <span class="counter-label">Time since we became official:</span>
+                <div class="timer-display" id="relationshipTimer">
+                  <span id="timerSeconds">00:00:01</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="celebration-actions">
+          <button id="saveScreenshotBtn" class="action-btn primary-action">
+            <span>📸 Capture Memory</span>
+          </button>
+          <button id="replayCelebrationBtn" class="action-btn secondary-action">
+            <span>✨ Shower More Love</span>
+          </button>
+          <button id="closeCelebrationBtn" class="action-btn subtle-action">
+            <span>Back to Workspace</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONALIZATION & SETTINGS MODAL -->
+  <div class="customize-modal-backdrop" id="customizeModal">
+    <div class="customize-drawer">
+      <div class="drawer-header">
+        <div class="drawer-title">
+          <span>⚙️ Personalize This Proposal</span>
+        </div>
+        <button id="closeCustomizeBtn" class="close-drawer-btn">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <p class="drawer-hint">
+          Enter her name and your details below. You can save it, test it, and copy a direct shareable link to send to her!
+        </p>
+
+        <form id="customizeForm" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="inputCrushName">Her Name (Your Crush):</label>
+            <input type="text" id="inputCrushName" placeholder="e.g. Ayesha, Sarah, Angel, etc." required maxlength="40">
+          </div>
+
+          <div class="form-group">
+            <label for="inputProposerName">Your Name / Nickname:</label>
+            <input type="text" id="inputProposerName" placeholder="e.g. Alex, Your Dev, etc." required maxlength="40">
+          </div>
+
+          <div class="form-group">
+            <label for="inputCustomNote">Special Message in Proposal:</label>
+            <textarea id="inputCustomNote" rows="3" placeholder="Write a personal touch that will make her heart melt..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="themeSelect">Color Theme:</label>
+            <select id="themeSelect">
+              <option value="theme-neon-rose">Neon Rose & Pink (Romantic Dream)</option>
+              <option value="theme-cyber-violet">Cyber Violet & Blue (Midnight Stargaze)</option>
+              <option value="theme-emerald-matrix">Emerald Love (Cute Matrix Hacker)</option>
+              <option value="theme-pastel-sunset">Pastel Sunset (Warm Amber & Ruby)</option>
+            </select>
+          </div>
+
+          <div class="drawer-actions">
+            <button type="button" id="saveAndApplyBtn" class="action-btn primary-action full-width">
+              <span>💾 Save & Apply Now</span>
+            </button>
+
+            <button type="button" id="copyShareLinkBtn" class="action-btn secondary-action full-width">
+              <span>🔗 Copy Shareable Link For Her</span>
+            </button>
+            <div id="copySuccessMsg" class="copy-alert" style="display:none;">
+              ✅ Link copied to clipboard! Send it to her!
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Quick Music & Proposal Trigger Buttons -->
+  <div class="floating-actions-dock">
+    <button id="floatingMusicBtn" class="float-btn" title="Toggle Lo-Fi Music">
+      <span class="icon">🎧</span>
+      <span class="float-tooltip">Lo-Fi Synth</span>
+    </button>
+    <button id="floatingProposalBtn" class="float-btn propose-float" title="Propose Right Now!">
+      <span class="icon">💍</span>
+      <span class="float-tooltip">Be Mine?</span>
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
